@@ -3,8 +3,8 @@ import CardList from '../components/CardList'
 import SearchBox from '../components/SearchBox'
 import Scroll from '../components/Scroll'
 import '../containers/App.css'
-
-
+// eslint-disable-next-line
+import tachyons from 'tachyons'
 
 class App extends Component {
     constructor() {
