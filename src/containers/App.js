@@ -5,6 +5,8 @@ import Scroll from '../components/Scroll'
 import '../containers/App.css'
 // eslint-disable-next-line
 import tachyons from 'tachyons'
+import ErrorBoundry from '../components/ErrorBoundry'
+
 
 class App extends Component {
     constructor() {
@@ -37,7 +39,9 @@ class App extends Component {
 
                 <SearchBox searchChange={this.onSearchChange} />
                 <Scroll>
-                    <CardList robots={filteredBot} />
+                    <ErrorBoundry>
+                        <CardList robots={filteredBot} />
+                    </ErrorBoundry>
                 </Scroll>
 
             </div>
