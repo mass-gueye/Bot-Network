@@ -7,13 +7,17 @@ import '../containers/App.css'
 // eslint-disable-next-line
 import tachyons from 'tachyons'
 import ErrorBoundry from '../components/ErrorBoundry'
-import axios from 'axios';
-import { setSearchField } from '../actions'
+
+import { setSearchField, requestRobots } from '../actions'
+
 
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        searchField: state.searchField
+        searchField: state.searchBots.searchField,
+        robots: state.requestRobots.robots,
+        isPending: state.requestRobots.isPending,
+        error: state.requestRobots.error
     }
 }
 
@@ -22,33 +26,27 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         onSearchChange: (event) => {
             dispatch(setSearchField(event.target.value))
-        }
+        },
+
+        onRequestRobots: () => dispatch(requestRobots())
     }
 }
 
 class App extends Component {
-    constructor() {
-        super()
-        this.state = {
-            robots: []
-        }
-    }
 
     componentDidMount() {
-        axios.get('https://jsonplaceholder.typicode.com/users')
-            .then(response => response.data)
-            .then(users => this.setState({ robots: users }))
-
+        this.props.onRequestRobots();
     }
 
-
     render() {
-        const { robots } = this.state;
-        const { searchField, onSearchChange } = this.props;
+        const { searchField, onSearchChange, robots, isPending } = this.props;
+        console.log('====================================');
+        console.log(robots);
+        console.log('====================================');
         const filteredBot = robots.filter(bot => {
             return bot.name.toLowerCase().includes(searchField.toLowerCase())
         })
-        return !robots.length ? <h1 className="f1 tc">Loading</h1> : (
+        return isPending ? <h1 className="f1 tc">Loading</h1> : (
             <div className="tc">
                 <h1 className="f1">BOTNETWORK</h1>
 
