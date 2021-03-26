@@ -7,7 +7,7 @@ import '../containers/App.css'
 // eslint-disable-next-line
 import tachyons from 'tachyons'
 import ErrorBoundry from '../components/ErrorBoundry'
-
+import axios from 'axios';
 import { setSearchField } from '../actions'
 
 
@@ -34,9 +34,9 @@ class App extends Component {
         }
     }
 
-    async componentDidMount() {
-        await fetch('https://jsonplaceholder.typicode.com/users')
-            .then(response => response.json())
+    componentDidMount() {
+        axios.get('https://jsonplaceholder.typicode.com/users')
+            .then(response => response.data)
             .then(users => this.setState({ robots: users }))
 
     }
